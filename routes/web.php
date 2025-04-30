@@ -15,3 +15,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::view('additional/information', 'profile.additionalInformation')->name('user.info');

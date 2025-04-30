@@ -64,4 +64,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function adress() {
+        return $this->hasOne(Adress::class);
+    }
+
+    public function biography() {
+        return $this->hasOne(Biography::class);
+    }
 }
