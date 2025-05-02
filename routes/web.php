@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::middleware([
     'auth:sanctum',
@@ -17,3 +17,4 @@ Route::middleware([
 });
 
 Route::view('additional/information', 'profile.additionalInformation')->name('user.info');
+

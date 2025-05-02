@@ -1,16 +1,14 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 h-20 shadow-xl">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
+        <div class="flex justify-between h-16">
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('dashboard') }}">
+                    <x-application-mark class="block h-9 w-auto" />
+                </a>
+            </div>
+            <div class="flex">
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -86,7 +84,9 @@
                     </div>
                 @endif
 
-                <!-- Settings Dropdown -->
+                @if (Route::has('login'))
+                @auth
+                    
                 <div class="ms-3 relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -113,7 +113,7 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-dropdown-link href="{{ route('profile.show') }}">
+                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -136,7 +136,14 @@
                             </form>
                         </x-slot>
                     </x-dropdown>
+                </div> 
+                @else
+                <div>
+                    <p>{{ __('Log In') }}</p>
                 </div>
+                @endif
+                @endauth
+
             </div>
 
             <!-- Hamburger -->
@@ -158,7 +165,8 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-
+        @if (Route::has('login'))
+        @auth
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex items-center px-4">
@@ -230,5 +238,7 @@
                 @endif
             </div>
         </div>
+        @endif
+        @endauth
     </div>
 </nav>
