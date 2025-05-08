@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset("images/Logo.png") }}" alt="logo for MICR" class="block h-20">
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -51,7 +51,7 @@
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-button class="ms-4">
+                <x-button class="bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 ml-3">
                     {{ __('Register') }}
                 </x-button>
             </div>

@@ -19,16 +19,20 @@
             </style>
         @endif
     </head>
-    <body class="h-full">
-        <header class="w-full h-28  text-sm mb-6 not-has-[nav]:hidden">
+    <body class="h-screen">
+        @if (session('success'))
+        <div class="alert alert-success text-center bg-green-600 text-white px-4 py-2 w-1/3 text-sm fixed top-28 left-0 rounded-full z-10">
+            {{ session('success') }}
+        </div>
+    @endif
+        <header class="w-full h-28 text-sm mb-6 not-has-[nav]:hidden">
             <livewire:navigation-menu>
         </header>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <div class="min-h-[calc(100vh-112.5px)] bg-[url('{{ asset("images/sign-up-banner.jpg") }}')] bg-cover bg-center">
         @if (Route::has('login'))
+        <div class="text-4xl w-full text-center">
+        <h2><b>{{ __('Log in') }} </b>{{ __('Or') }} <b>{{ __('Register') }}</b></h2>
+    </div>
         <div  class="h-72 grid grid-cols-6 gap-4 w-full mt-16">
             @auth
             <div>
@@ -40,10 +44,10 @@
                 </a>
             </div>
             @else
-            <div class="col-span-4 col-start-2 text-center bg-orange-400 rounded-full h-11 p-3">
+            <div class="col-span-4 col-start-2 text-center bg-orange-400 rounded-full h-11 hover:bg-white  text-white hover:text-black hover:border-orange-400 border hover:h-14 hover:text-2xl">
                 <a
                     href="{{ route('login') }}"
-                    class="block"
+                    class="block w-full p-2"
                 >
                     {{ __('Log in') }}
                 </a>
@@ -61,11 +65,11 @@
                 </div>
             </div>
             </div>
-            <div class="col-span-4 col-start-2 text-center bg-orange-400 rounded-full h-11 p-3">
+            <div class="col-span-4 col-start-2 text-center bg-orange-400 rounded-full h-11 hover:bg-white  text-white hover:text-black hover:border-orange-400 border hover:h-14 hover:text-2xl">
                 @if (Route::has('register'))
                     <a
                         href="{{ route('register') }}"
-                        class="block">
+                        class="block  w-full p-2">
                         {{ __('Register') }}
                     </a>
                 @endif
@@ -76,5 +80,6 @@
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
+    </div>
     </body>
 </html>

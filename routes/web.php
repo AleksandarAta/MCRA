@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
@@ -16,5 +16,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::view('additional/information', 'profile.additionalInformation')->name('user.info');
+Route::get('additional/information/{user}', [UserController::class, 'info'])->name('user.info');
+
 
