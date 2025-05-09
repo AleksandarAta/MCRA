@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Adress;
+use App\Models\Biography;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -63,9 +65,39 @@ class UserController extends Controller
         //
     }
     public function info(User $user){
-        // $user = User::findOrFail($id)->first();
         return view('profile.additionalInformation' , [
             'user' => $user,
         ]);
+    }
+    public function addInfo(Request $request) {
+
+        $request->validate([
+            'city' => 'required|string',
+            'country' => 'required|string',
+            'street' => 'required|string',
+            'postal_code' => 'required|integer|min:4',
+            'title' => 'required|string',
+            'biography' => 'required|string',
+            'user_id' => "unique:biographies,user_id",
+        ]);
+        Adress::create([
+            'country' => $request->country,
+            'city' => $request->city,
+            'street' => $request->street,
+            'postal_code' => $request->postal_code,
+            'user_id' => $request->user_id,
+        ]);
+        Biography::create([
+            'title' => $request->title,
+            'biography' => $request->biography,
+            'user_id' => $request->user_id,
+            
+        ]);
+
+
+        
+
+
+        return redirect()->route('dashboard');
     }
 }

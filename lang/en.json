@@ -378,6 +378,16 @@
     "Success registration": "You have successfully registered please check your email and click on the link to continue",
     "Join us": "Join us",
     "Thank you for registring to our website": "Thank you for registring to our website",
-    "To continue please click on this link": "To continue please click on this link"
+    "To continue please click on this link": "To continue please click on this link",
+    "Additional information": "Additional information",
+    "Living address": "Living address",
+    "Short Biography": "Short Biography",
+    "Country": "Country",
+    "city": "City",
+    "street": "Street",
+    "postal code": "Postal code",
+    "title": "Title",
+    "biograpy": "Biography",
+    "You have already filled this form": "You have already filled this form"
 
 }

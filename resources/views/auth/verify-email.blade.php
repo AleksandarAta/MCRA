@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+           <a href="{{ route('welcome') }}"> <img src="{{ asset("images/Logo.png") }}" alt="logo for MICR" class="block h-20"></a>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
@@ -19,19 +19,13 @@
                 @csrf
 
                 <div>
-                    <x-button type="submit">
+                    <x-button type="submit" class="bg-orange-400 hover:bg-white hover:text-black hover:border hover:border-orange-400 hover:shadow-2xl">
                         {{ __('Resend Verification Email') }}
                     </x-button>
                 </div>
             </form>
 
             <div>
-                <a
-                    href="{{ route('profile.show') }}"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    {{ __('Edit Profile') }}</a>
-
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
 

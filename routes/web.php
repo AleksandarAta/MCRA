@@ -14,8 +14,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+Route::get('additional/information/{user}', [UserController::class, 'info'])->name('user.info');
+Route::post('add/additional/info', [UserController::class, "addInfo"])->name('add.information');
 });
 
-Route::get('additional/information/{user}', [UserController::class, 'info'])->name('user.info');
+
+
+
 
 

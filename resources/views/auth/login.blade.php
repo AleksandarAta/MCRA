@@ -1,7 +1,8 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <img src="{{ asset("images/Logo.png") }}" alt="logo for MICR" class="block h-20">
+            <a href="{{ route('welcome') }}"> <img src="{{ asset("images/Logo.png") }}" alt="logo for MICR" class="block h-20"></a>
+
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -24,11 +25,6 @@
                 <x-label for="password" value="{{ __('Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
-
-            {{-- <div class="mt-4">
-                <x-label for="Phone" value="{{ __('Phone') }}" />
-                <x-input id="Phone" class="block mt-1 w-full" type="tel" name="phone" required autocomplete="current-password" />
-            </div> --}}
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
