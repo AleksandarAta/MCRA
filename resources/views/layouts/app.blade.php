@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -41,6 +42,25 @@
         @stack('modals')
         @livewireScripts
         @stack('scripts')
+        <script src="https://kit.fontawesome.com/52dd7732e0.js" crossorigin="anonymous"></script>
+        <script>
+            const toggle = document.getElementById('darkToggle');
+            const sun = document.getElementById('sun');
+            const moon = document.getElementById('moon');
+
+            toggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+                if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
 
     </body>
 </html>

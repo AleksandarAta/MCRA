@@ -5,13 +5,18 @@
             {{ __('Additional information') }}
         </h2>
     </x-slot>
+    @if (session()->has('message'))
+            <div class="text-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+             <span class="font-bold">   {{ session('message') }} </span>
+            </div>
+    @endif
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <form  action="{{ route('add.information') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                    <input type="hidden" name="user_id" id="user_id" value="{{ Auth::id() }}">
                     @error('user_id')
                     <span class="text-red-500 text-sm">{{ __("You have already filled this form") }}</span>
                 @enderror

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Adress;
 use App\Models\Biography;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -64,10 +65,8 @@ class UserController extends Controller
     {
         //
     }
-    public function info(User $user){
-        return view('profile.additionalInformation' , [
-            'user' => $user,
-        ]);
+    public function info(){
+        return view('profile.additionalInformation');
     }
     public function addInfo(Request $request) {
 

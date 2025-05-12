@@ -72,4 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function biography() {
         return $this->hasOne(Biography::class);
     }
+    public function user() {
+        return $this->hasMany(Blog::class);
+    }
 }
