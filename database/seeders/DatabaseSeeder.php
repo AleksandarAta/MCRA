@@ -6,6 +6,7 @@ use App\Models\Blog;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RoleAndPremissonSeeder::class);
+
         User::factory(10)->create();
+
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'phone' =>  '070619131',
+            'password' => Hash::make('admin'),
+        ])->assignRole('admin');
+
+        User::create([
+            'name' => 'editor',
+            'email' => 'editor@editor.com',
+            'phone' =>  '070619131',
+            'password' => Hash::make('editor'),
+        ])->assignRole('editor');   
 
         Blog::factory(100)->create();
       

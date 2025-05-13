@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Middleware\LoggedUser;
+use Illuminate\Support\Facades\App;
 use App\Http\Middleware\NeedUserInfo;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\InsertedUserInfo;
 
@@ -21,6 +23,7 @@ Route::middleware([
             return view('dashboard');
         })->name('dashboard');
         Route::get('blogs' , [BlogController::class , 'index'])->name('blogs.all');
+        Route::resource('user', UserController::class);
     });
     Route::middleware(InsertedUserInfo::class)->group(function() {
         Route::get('additional/information', [UserController::class, 'info'])->name('user.info');
@@ -28,8 +31,6 @@ Route::middleware([
     });
 });
 
-
-
-
+Route::get('change' , [LanguageController::class , 'change'])->name('lang.change');
 
 

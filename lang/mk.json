@@ -391,5 +391,15 @@
     "You have already filled this form": "Веќе ја имате пополнето оваа форма",
     "Show More": "Прикажи Повеќе",
     "Search for blogs": "Претражи блогови",
-    "No search results for": "Нема резултати за "
+    "No search results for": "Нема резултати за ",
+    "Show as Admin": "Прикажи како админ",
+    "Title": "Наслов",
+    "Slug": "Slug",
+    "Body": "содржина",
+    "Published": "Објавено",
+    "Keywords": "Тагови",
+    "Written by": "Напишано од",
+    "Show as User": "Прикажи како корисник",
+    "Create a new blog": "Создади нов блог",
+    "Search for users": "Претражи корисници"
 }
