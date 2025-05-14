@@ -4,46 +4,20 @@
             {{ __('Profile') }}
         </h2>
     </x-slot>
+    <div x-data= "{isOpen: false}">
+        <div class="py-12 dark:text-white" x-show = "!isOpen">
+            <x-user.profile :user="$user" />
+        </div>
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" x-show = "isOpen">
 
-    <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                {{-- {{ dd(Auth::user()->load('adress')) }} --}}
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <div class=" p-3 grid grid-cols-8 gap-4 dark:bg-slate-600">
-                    <div class="shadow-xl p-3 col-span-3 dark:bg-gray-800">
-                            <img src="{{ asset(Auth::user()->img) }}" alt="{{ Auth::user()->name }}">
-                            <p>{{Auth::user()->name}}</p>
-                            @if (Auth::user()->load('adress')->adress != null)
-                                <p>{{Auth::user()->load('adress')->adress->city}}</p>
-                                <p>{{Auth::user()->load('adress')->adress->country}}</p>
-                            @else 
-                            <p> User not verified yet</p>
-                            @endif
-                            <p>{{Auth::user()->phone}}</p>
-                            <p>{{Auth::user()->email}}</p>
-                            <button
-                 class="rounded p-1 bg-orange-400  hover:text-black hover:bg-white hover:border hover:border-orange-400  dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-sm">
-                <a href="#"> {{ __('Add friend') }}</a>
-                </button>
-                    </div>
-                    <div class="col-span-4">
-                        @if (Auth::user()->load('biography')->biography != null)
-                        <p>{{Auth::user()->load('biography')->biography->title}}</p>
-                        <p>{!! Auth::user()->load('biography')->biography->biography !!}</p>
-                        @else
-                        <p>User not verified yet</p>
-                        @endif
-                        <h2>{{__("Commneds")}}</h2>
-                            <p>To be continued...</p>
-                    </div>    
-                </div>              
-            </div>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg mt-4">
-                    <h2>{{__('Badges')}}</h2>
-                </div>
-
-
-
+            <button @click = "isOpen = false"
+                class="rounded p-1   hover:text-black dark:text-white dark:hover:text-black text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="fill-orange-700 dark:fill-orange-400 w-5 h-6"
+                    viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                    <path
+                        d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
+                </svg>
+            </button>
 
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
@@ -75,7 +49,7 @@
                 <x-section-border />
 
                 <div class="mt-10 sm:mt-0">
-                    <livewire:profile.delete-user-form/>
+                    <livewire:profile.delete-user-form />
                 </div>
             @endif
         </div>
