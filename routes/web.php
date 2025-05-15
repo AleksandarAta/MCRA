@@ -9,6 +9,10 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\InsertedUserInfo;
 
+route::get('/', function () {
+    return view('hi');
+});
+
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome')->middleware(LoggedUser::class);
@@ -22,15 +26,13 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
-        Route::get('blogs' , [BlogController::class , 'index'])->name('blogs.all');
+        Route::get('blogs', [BlogController::class, 'index'])->name('blogs.all');
         Route::resource('user', UserController::class);
     });
-    Route::middleware(InsertedUserInfo::class)->group(function() {
+    Route::middleware(InsertedUserInfo::class)->group(function () {
         Route::get('additional/information', [UserController::class, 'info'])->name('user.info');
         Route::post('add/additional/info', [UserController::class, "addInfo"])->name('add.information');
     });
 });
 
-Route::get('change' , [LanguageController::class , 'change'])->name('lang.change');
-
-
+Route::get('change', [LanguageController::class, 'change'])->name('lang.change');

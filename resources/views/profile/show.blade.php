@@ -6,7 +6,8 @@
     </x-slot>
     <div x-data= "{isOpen: false}">
         <div class="py-12 dark:text-white" x-show = "!isOpen">
-            <x-user.profile :user="$user" />
+            <livewire:users.profile :user="$user" />
+
         </div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" x-show = "isOpen">
 

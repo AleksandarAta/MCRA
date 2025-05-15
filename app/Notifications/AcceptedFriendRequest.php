@@ -3,18 +3,19 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class FriendRequestNotification extends Notification
+class AcceptedFriendRequest extends Notification
 {
     use Queueable;
 
     public $event;
     public $user;
+
 
     /**
      * Create a new notification instance.
@@ -32,7 +33,7 @@ class FriendRequestNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['broadcast', 'database'];
+        return ['broadcast'];
     }
 
     /**
@@ -43,6 +44,7 @@ class FriendRequestNotification extends Notification
         return new BroadcastMessage([
             'event' => $this->event,
             'user' => $this->user,
+
         ]);
     }
 

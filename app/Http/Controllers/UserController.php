@@ -37,8 +37,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $userEmail)
     {
+        $user = User::where('email', $userEmail)->first();
+
         $user->load('adress', 'biography');
         return view('users.show', compact('user'));
     }
@@ -66,10 +68,12 @@ class UserController extends Controller
     {
         //
     }
-    public function info(){
+    public function info()
+    {
         return view('profile.additionalInformation');
     }
-    public function addInfo(Request $request) {
+    public function addInfo(Request $request)
+    {
 
         $request->validate([
             'city' => 'required|string',
@@ -91,11 +95,11 @@ class UserController extends Controller
             'title' => $request->title,
             'biography' => $request->biography,
             'user_id' => $request->user_id,
-            
+
         ]);
 
 
-        
+
 
 
         return redirect()->route('dashboard');

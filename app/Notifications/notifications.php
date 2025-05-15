@@ -4,25 +4,19 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Broadcast;
 
-class FriendRequestNotification extends Notification
+class notifications extends Notification
 {
     use Queueable;
-
-    public $event;
-    public $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($user, $event)
+    public function __construct()
     {
-        $this->event = $event;
-        $this->user = $user;
+        //
     }
 
     /**
@@ -32,18 +26,18 @@ class FriendRequestNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['broadcast', 'database'];
+        return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toBroadcast(object $notifiable): BroadcastMessage
+    public function toMail(object $notifiable): MailMessage
     {
-        return new BroadcastMessage([
-            'event' => $this->event,
-            'user' => $this->user,
-        ]);
+        return (new MailMessage)
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -54,8 +48,7 @@ class FriendRequestNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'event' => $this->event,
-            'user' => $this->user,
+            //
         ];
     }
 }
