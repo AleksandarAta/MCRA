@@ -26,16 +26,13 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('blogs.all') }}" :active="request()->routeIs('blogs.*')">
+                    <x-nav-link href="{{ route('blogs.index') }}" :active="request()->routeIs('blogs.*')">
                         {{ __('Blogs') }}
                     </x-nav-link>
                 </div>
-                @if (Auth::check())
-                    <livewire:users.friend-request wire:listen.window />
-                @endif
+                <livewire:delete-modal />
             </div>
-
-            <div class="hidden sm:flex sm:items-center sm:ms-6 w-1/3">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 ">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ms-3 relative">

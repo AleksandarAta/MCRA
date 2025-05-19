@@ -1,5 +1,5 @@
-<div class="relative p-1 h-10 flex justify-center items-center w-11" x-data="{ isOpen: false }" @click.away="isOpen = false"
-    @keydown.esc="isOpen = false">
+<div class="relative p-1 flex justify-center items-center w-11" x-data="{ isOpen: false }" @click.away="isOpen = false"
+    @keydown.esc="isOpen = false" x-on:playSound = "document.getElementById('notifSound').play()">
 
     @if ($notificaationNumber)
         <div
@@ -16,59 +16,44 @@
         </svg>
     </button>
 
-
+    <audio id="notifSound" src="{{ asset('images/mixkit-long-pop-2358.wav') }}" preload="auto"></audio>
     <div x-show="isOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="top-0 fixed md:absolute w-72 md:w-64 max-h-96 overflow-y-auto rounded-lg font-semibold text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 shadow-xl border border-gray-200 dark:border-gray-700 mt-10 md:mt-2 p-4 z-50 flex flex-col space-y-2">
+        class="fixed md:absolute w-64 md:w-64 max-h-96 overflow-y-auto rounded-lg font-semibold text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 shadow-xl border top-5 right-0 border-gray-200 dark:border-gray-700 mt-10 md:mt-2 p-4 z-50 flex flex-col space-y-2">
         @if (count($notifications) > 0)
             @foreach ($notifications as $notification)
-                <div x-data='{accepted: true}'
+                <div
                     class="p-2 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all rounded-lg">
                     @if ($notification['event'] == 'send')
                         <div x-data="{ status: 'pending' }" class="space-y-2">
                             <template x-if="status === 'pending'">
                                 <div x-transition>
                                     <span class="text-sm">
-                                        {{ $notification['name']->name }} sent you a friend request
+                                        <a href="{{ route('user.show', $notification['name']->email) }}">
+                                            {{ $notification['name']->name }} {{ __('sent you a friend request') }}
                                     </span>
-                                    <div class="flex gap-2 mt-2">
-                                        <button
-                                            @click="status = 'accepted'; $dispatch('acceptFriend', { friend_id: {{ $notification['name']->id }} })"
-                                            class="rounded p-1 bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-sm">
-                                            {{ __('Accept') }}
-                                        </button>
-                                        <button
-                                            @click="status = 'rejected'; $dispatch('rejectFriend', { friend_id: {{ $notification['name']->id }} })"
-                                            class="rounded p-1 bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-sm">
-                                            {{ __('Reject') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <template x-if="status === 'accepted'">
-                                <div x-transition class="text-green-600 text-sm">
-                                    ✅ Friend request accepted.
-                                </div>
-                            </template>
-
-                            <template x-if="status === 'rejected'">
-                                <div x-transition class="text-red-600 text-sm">
-                                    ❌ Friend request rejected.
                                 </div>
                             </template>
                         </div>
-                    @endif
-                    @if ($notification['event'] == 'accepted')
-                        <span class="text-sm">{{ $notification['name']->name }} accepted your friend request</span>
+                    @elseif ($notification['event'] == 'accepted')
+                        <a href="{{ route('user.show', $notification['name']->email) }}">
+                            <span class="text-sm">{{ $notification['name']->name }}
+                                {{ __('accepted your friend request') }}</span>
+                        </a>
+                    @elseif ($notification['event'] == 'commented')
+                        {{-- {{ dd($notification) }} --}}
+                        <a href="{{ route('blogs.show', $notification['slug']) }}">
+                            <span class="text-sm">{{ $notification['name']->name }}
+                                {{ __('Commented on your blog') }}</span>
+                        </a>
                     @endif
                 </div>
             @endforeach
         @else
             <div class="p-2 text-center text-gray-500">
-                No new notifications
+                {{ __('No new notifications') }}
             </div>
         @endif
     </div>

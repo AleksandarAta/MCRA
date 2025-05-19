@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -12,10 +13,10 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::with('user')->where('publish', true)->paginate(12);
-        
+        $blogs = Blog::with('user',)->where('publish', true)->paginate(15);
+
         return view('blogs.index', [
-            'blogs' => $blogs,   
+            'blogs' => $blogs,
         ]);
     }
 
@@ -38,9 +39,15 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show(string $slug)
     {
-        //
+        $blog = Blog::where('slug', $slug)->with('comments', 'user')->first();
+        $comments = Comment::where('blog_id', $blog->id)->with('user')->get();
+
+        return view('blogs.show', [
+            'blog' => $blog,
+            'comments' => $comments
+        ]);
     }
 
     /**

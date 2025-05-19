@@ -10,7 +10,12 @@ class Blog extends Model
     /** @use HasFactory<\Database\Factories\BlogFactory> */
     use HasFactory;
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+    public function comments()
+    {
+        return $this->HasMany(Comment::class, 'blog_id');
     }
 }

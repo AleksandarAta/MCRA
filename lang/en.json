@@ -401,8 +401,13 @@
     "Written by": "Written by",
     "Show as User": "Show as User",
     "Create a new blog": "Create a new blog",
-    "Search for users": "Search for users"
-    
-
-
+    "Search for users": "Search for users",
+    "sent you a friend request": "sent you a friend request",
+    "Reject": "Reject",
+    "accepted your friend request": "accepted your friend request",
+    "No new notifications": "No new notifications",
+    "Biography": "Biography",
+    "Commneds": "Commneds",
+    "Add a comment": "Add a comment",
+    "Comments": "Comments"
 }

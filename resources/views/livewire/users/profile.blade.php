@@ -1,24 +1,31 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                <div class=" p-3 grid grid-cols-8 gap-4 dark:bg-slate-600">
-                    <div class="shadow-xl p-3 col-span-3 dark:bg-gray-800">
-                        <img src="{{ asset($user->img) }}" alt="{{ $user->name }}">
-                        <p>{{ $user->name }}</p>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg h-full">
+                <div class=" p-3 grid grid-cols-8 gap-4 dark:bg-slate-600 h-full ">
+                    <div class="shadow-xl p-3 col-span-3 dark:bg-gray-800 bg-gray-300 text-center">
+                        <img src="{{ asset($user->profile_photo_path) }}" alt="{{ $user->name }}">
+                        <p class="p-2">{{ $user->name }}</p>
+                        <hr>
                         @if ($user->adress != null)
-                            <p>{{ $user->adress->city }}</p>
-                            <p>{{ $user->adress->country }}</p>
+                            <div class="p-2">
+                                <p>{{ $user->adress->city }}</p>
+                                <p>{{ $user->adress->country }}</p>
+                            </div>
                         @else
                             <p>User not verified yet</p>
                         @endif
-                        <p>{{ $user->phone }}</p>
-                        <p>{{ $user->email }}</p>
-                        @if (Auth::user() != $user)
-                            <button wire:click="addFriend({{ $user->id }})"
-                                class="rounded p-1 bg-orange-400  hover:text-black hover:bg-white hover:border hover:border-orange-400  dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-sm">
-                                {{ __('Add friend') }}
-                            </button>
-                        @endif
+                        <hr>
+                        <p class="p-1">{{ $user->phone }}</p>
+                        <p class="p-1">{{ $user->email }}</p>
+                        <div class="flex items-center justify-around mt-2 w-2/3">
+                            <livewire:users.friend-request :user="$user">
 
+                                @if (Auth::user() != $user)
+                                    <button
+                                        class=" whitespace-nowrap  rounded p-1 bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-sm">
+                                        {{ __('Commend') }} {{ $user->name }}
+                                    </button>
+                                @endif
+                        </div>
                         @if (Auth::user() == $user)
                             <button @click = "isOpen = true"
                                 class="rounded p-1   hover:text-black  dark:text-white dark:hover:text-blacktext-sm">
@@ -31,15 +38,41 @@
                             </button>
                         @endif
                     </div>
-                    <div class="col-span-4">
+                    <div class="col-span-5 ">
+                        <h2 class="text-3xl font-bold">{{ __('Biography') }}</h2>
                         @if ($user->biography != null)
-                            <p>{{ $user->biography->title }}</p>
-                            {!! $user->biography->biography !!}
+                            <div class="p-2">
+                                <p class="mb-1">{{ $user->biography->title }}</p>
+                                <span>{!! $user->biography->biography !!} </span>
+                            </div>
                         @else
                             <p>User not verified yet</p>
                         @endif
-                        <h2>{{ __('Commneds') }}</h2>
-                        <p>To be continued...</p>
+
+
+                        @if (Auth::user() == $user && $user->commends->isEmpty())
+                        @elseif ($user->commends->isEmpty())
+                        @else
+                            <div class="relative pb-9">
+                                <h2 class="text-3xl font-bold">{{ __('Commneds') }}</h2>
+                                @foreach ($commends as $commend)
+                                    <div class="col-span-4">
+                                        <h3>{{ $commend->user->name }}</h3>
+                                        <blockquote class="p-2">
+                                            {{ $commend->commend }}
+                                        </blockquote>
+                                    </div>
+                                    <hr>
+                                    @if ($loop->iteration >= 3)
+                                        <button
+                                            class=" absolute bottom-0 right-0 rounded p-1 bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400 text-l">
+                                            {{ __('Show more') }}
+                                        </button>
+                                        @break
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

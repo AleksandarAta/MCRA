@@ -2,17 +2,17 @@
 
 namespace App\Livewire\Users;
 
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class Notifications extends Component
 {
     public $notifications;
     public $userId;
-    public $status;
     public $notificaationNumber = 0;
     public function mount()
     {
@@ -39,15 +39,33 @@ class Notifications extends Component
     #[On('echo-notification:App.Models.User.{userId}, notification')]
     public function gotNotification($notification)
     {
-        $this->notificaationNumber++;
 
-        $name = User::select('id', 'name')->where('id', $notification['user'])->first();
-        $this->notifications->push([
-            'name' => $name,
-            'event' => $notification['event'],
-            'friend_id' =>  $notification['user'],
-            'id' => $notification['id'],
-        ]);
+        $this->notificaationNumber++;
+        $name = User::select('id', 'name', 'email')->where('id', $notification['user'])->first();
+
+        if ($notification['event'] == 'send' || $notification['event'] == 'accepted') {
+            $this->notifications->push([
+                'name' => $name,
+                'event' => $notification['event'],
+                'friend_id' =>  $notification['user'],
+                'id' => $notification['id'],
+                'email' => $name->email,
+            ]);
+            $this->dispatch('checkStatus')->to(FriendRequest::class);
+        } elseif ($notification['event'] == 'commented') {
+            $this->notifications->push([
+                'name' => $name,
+                'event' => $notification['event'],
+                'friend_id' =>  $notification['user'],
+                'id' => $notification['id'],
+                'email' => $name->email,
+                'slug' => $notification['slug']
+            ]);
+        }
+
+        // dd($this->notifications);
+
+        $this->dispatch('playSound');
     }
 
     public function readNotifications()

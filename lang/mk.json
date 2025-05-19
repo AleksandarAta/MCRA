@@ -401,5 +401,14 @@
     "Written by": "Напишано од",
     "Show as User": "Прикажи како корисник",
     "Create a new blog": "Создади нов блог",
-    "Search for users": "Претражи корисници"
+    "Search for users": "Претражи корисници",
+    "sent you a friend request": "ти испрати понуда за пријателство",
+    "Reject": "Одби",
+    "accepted your friend request": "ја прифати твојата понуда за пријателство",
+    "No new notifications": "Немате нови известувања",
+    "Biography": "Биографија",
+    "Commneds": "Препораки",
+    "Add a comment": "Додади Коментар",
+    "Comments": "Коментари",
+    "Delete comment": "Избриши коментар"
 }

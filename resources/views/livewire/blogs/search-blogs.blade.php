@@ -28,13 +28,16 @@
                  <p>{{ __('No search results for') }} {{ $search }}</p>
              @endif
              @foreach ($blogs as $blog)
-                 <div class="flex justify-between h-20 p-2">
-                     <span>{{ $blog->title }}</span>
-                     @if ($blog->image)
-                         <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}"
-                             class="w-10 h-full object-cover">
-                     @endif
-                 </div>
+                 <a href="{{ route('blogs.show', $blog->slug) }}">
+
+                     <div class="flex justify-between h-20 p-2">
+                         <span>{{ $blog->title }}</span>
+                         @if ($blog->image)
+                             <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}"
+                                 class="w-10 h-full object-cover">
+                         @endif
+                     </div>
+                 </a>
              @endforeach
          @endif
      </div>
