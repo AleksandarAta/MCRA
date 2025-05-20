@@ -1,7 +1,7 @@
 <div x-data = "{isOpen: false, addCommentText: '{{ __('Add a comment') }}'}">
 
     <div x-show="isOpen">
-        <form action="POST" wire:submit.prevent="submit">
+        <form action="" wire:submit.prevent="submit">
             @csrf
             <input type="hidden" wire:model="user_id">
             <input type="hidden" wire:model="blog_id">

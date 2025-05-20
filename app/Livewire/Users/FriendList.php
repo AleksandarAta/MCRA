@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Users;
 
-use App\Models\ChatRoom;
 use App\Models\User;
+use App\Livewire\Chat;
 use App\Models\Friend;
 use Livewire\Component;
+use App\Models\ChatRoom;
+use App\Models\Messeges;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +18,7 @@ class FriendList extends Component
     public $user;
     public $friends_list;
     public $userList;
-
+    public $messages;
     public function mount()
     {
         // $this->user = Auth::user();
@@ -24,12 +26,23 @@ class FriendList extends Component
         $this->user = Auth::id();
         $this->userList = collect();
         $this->friends_list = Friend::where('user_id', $this->user)->get();
+
         $here = collect($this->here);
         $this->friends_list = $this->friends_list->map(function ($friend) {
             return User::findOrFail($friend->friend_id);
         });
-
         foreach ($this->friends_list as $friend) {
+            $participants = [$friend->id, $this->user];
+
+            $rooms_ids = ChatRoom::whereJsonContains('participants', $participants)->first();
+
+            if ($rooms_ids) {
+                $room_id = $rooms_ids->id;
+                $this->messages = Messeges::where('from', $friend->id)->where('chatRoom_id', $room_id)->get();
+            } else {
+                $this->messages = '';
+            }
+
             if ($here->contains('id', $friend->id)) {
                 $status = 'online';
             } else {
@@ -125,23 +138,6 @@ class FriendList extends Component
             ]);
         }
         $this->userList = $new_user_list;
-    }
-
-    #[On('startChat')]
-    public function startChat($id)
-    {
-
-        $participants = [$id, Auth::id()];
-
-        $all_chat_rooms = ChatRoom::whereJsonContains('participants', $participants)->first();
-
-        if ($all_chat_rooms == null) {
-            $participants = json_encode($participants);
-
-            ChatRoom::create([
-                'participants' => $participants
-            ]);
-        }
     }
 
     public function render()

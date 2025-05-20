@@ -5,8 +5,11 @@ namespace Database\Seeders;
 use App\Models\Blog;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Commend;
 use App\Models\Comment;
+use App\Models\Messeges;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Database\Seeders\RoleAndPremissonSeeder;
@@ -41,6 +44,12 @@ class DatabaseSeeder extends Seeder
 
         // Commend::factory(5)->create();
 
-        Comment::factory(100)->create();
+        // Comment::factory(100)->create();
+
+        // Messeges::factory(100)->create();
+
+        for ($i = 0; $i < 15; $i++) {
+            Event::factory()->has(Ticket::factory())->create();
+        }
     }
 }

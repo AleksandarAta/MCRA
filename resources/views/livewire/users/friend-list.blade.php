@@ -1,11 +1,13 @@
-<div class=" fixed bottom-0 right-0 dark:bg-gray-500 dark:text-white">
-    <ul class="p-1 dark:bg-gray-500">
+<div class=" fixed bottom-0 right-0 dark:bg-gray-500 dark:text-white w-64">
+
+    <ul class=" dark:bg-gray-500 w-full">
         @foreach ($userList as $friend)
-            <button @click="$dispatch('startChat', { id: {{ $friend['id'] }} })
-                class="whitespace-nowrap
-                flex bg-white p-2 items-center w-56 justify-between dark:bg-gray-500 hover:bg-blue-100 transition-colors
-                duration-200 rounded dark:hover:bg-blue-400">
-                <li class="flex items-center justify-between w-full">
+            <li
+                class="whitespace-nowrap bg-white p-4  dark:bg-gray-500 transition-colors duration-200 rounded dark:hover:bg-blue-400 hover:bg-blue-100">
+                <button
+                    @click="$dispatch('startChat', { friend_id: {{ $friend['id'] }} , name: '{{ $friend['name'] }}' })"
+                    class="flex
+                    items-center justify-between w-full">
                     @if (isset($friend['profile_photo_path']))
                         <a href="{{ route('user.show', $friend['email']) }}">
                             <img src="{{ asset($friend['profile_photo_path']) }}" alt="profile img"
@@ -20,8 +22,8 @@
                     @else
                         <span class="inline-block w-2 h-2 bg-gray-500 rounded-full dark:bg-gray-100"></span>
                     @endif
-                </li>
-            </button>
+                </button>
+            </li>
         @endforeach
     </ul>
 </div>

@@ -39,6 +39,7 @@
         <main>
             <livewire:users.friend-list wire:poll.200ms />
             {{ $slot }}
+            <livewire:chat />
         </main>
 
     </div>

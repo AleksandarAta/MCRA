@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Messeges extends Model
+class Event extends Model
 {
+    /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
+
     protected $guarded = [];
 
-    public function chatRoom()
+    public function ticket()
     {
-        return $this->belongsTo(ChatRoom::class, "chatRoom_id");
+        return $this->hasOne(Ticket::class, 'event_id');
     }
 }

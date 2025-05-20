@@ -22,15 +22,15 @@
             <h2 class="text-3xl text-center text-orange-600 dark:text-orange-400">{{ __('Comments') }}</h2>
             @foreach ($comments as $comment)
                 <div class="flex flex-col justify-center p-2">
-                    <div class="{{ Auth::id() == $comment->user->id ? 'flex justify-between w-72' : 'flex' }}">
-                        <div class="flex">
+                    <div class="{{ Auth::id() == $comment->user->id ? 'flex justify-between w-80' : 'flex' }}">
+                        <div class="flex whitespace-nowrap">
                             <img src="{{ asset($blog->user->profile_photo_path) }}" alt="pp"
                                 class="w-10 h-15 rounded-xl mr-3">
                             <h5 class="self-center">{{ $comment->user->name }}</h5>
                         </div>
                         @if (Auth::id() == $comment->user->id)
                             <button
-                                class="bg-red-400 text-dark dark:bg-red-800 dark:text-white rounded-xl mr-3 p-1  hover:text-red-400  hover:bg-white dark:hover:bg-white dark:hover:text-red-600"
+                                class="whitespace-nowrap  bg-red-400 text-dark dark:bg-red-800 dark:text-white rounded-xl ml-3 p-1  hover:text-red-400  hover:bg-white dark:hover:bg-white dark:hover:text-red-600"
                                 type="button" @click="$dispatch('deleteComment', { commentId: {{ $comment->id }} })">
                                 {{ __('Delete comment') }}
                             </button>

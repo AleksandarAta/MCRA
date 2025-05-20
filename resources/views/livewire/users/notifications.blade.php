@@ -31,8 +31,13 @@
                             <template x-if="status === 'pending'">
                                 <div x-transition>
                                     <span class="text-sm">
-                                        <a href="{{ route('user.show', $notification['name']->email) }}">
+                                        @if ($notification['name']->email)
+                                            <a href="{{ route('user.show', $notification['name']->email) }}">
+                                                {{ $notification['name']->name }} {{ __('sent you a friend request') }}
+                                            </a>
+                                        @else
                                             {{ $notification['name']->name }} {{ __('sent you a friend request') }}
+                                        @endif
                                     </span>
                                 </div>
                             </template>
