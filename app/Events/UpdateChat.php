@@ -2,13 +2,12 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class UpdateChat implements ShouldBroadcast
 {
@@ -34,10 +33,20 @@ class UpdateChat implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [new PrivateChannel('chat.' . $this->channel)];
+        Log::info('From Event: ' . $this->message . " Type: " . $this->type . " Channel:  " . $this->channel . " Sender :" . $this->sender_id);
+        return [
+            new PrivateChannel('chat.' . $this->channel),
+        ];
     }
-    public function broadcastAs()
-    {
-        return 'message';
-    }
+    // public function broadcastAs()
+    // {
+    //     return 'message';
+    // }
+
+    // public function broadcastOn(): array
+    // {
+    //     return [
+    //         new PrivateChannel('chat.' . $this->channel),
+    //     ];
+    // }
 }

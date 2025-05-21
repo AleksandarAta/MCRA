@@ -52,11 +52,11 @@ class Chat extends Component
     }
     public function render()
     {
-        if ($this->open != null) {
-            foreach ($this->open as $op) {
-                dump($op);
-            }
-        }
+        // if ($this->open != null) {
+        //     foreach ($this->open as $op) {
+        //         dump($op);
+        //     }
+        // }
         return view('livewire.chat');
     }
 }

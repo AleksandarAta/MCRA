@@ -13,7 +13,7 @@
                 </div>
                 <div class="footer w-full bg-gray-300 p-2">
                     <form action="" wire:submit.prevent="sendMessage()" class="flex justify-between items-center">
-                        <input type="text" name="message" id="message"
+                        <input type="text" name="body" id="body"
                             class="w-11/12 rounded foucs:ring-0 focus:outline-none" wire:model="body">
                         <button type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"

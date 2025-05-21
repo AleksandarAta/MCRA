@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,6 +42,12 @@ class AcceptedFriendRequest extends Notification
      */
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
+
+
+        Log::info(new BroadcastMessage([
+            'massage' => 'message'
+        ]));
+
         return new BroadcastMessage([
             'event' => $this->event,
             'user' => $this->user,

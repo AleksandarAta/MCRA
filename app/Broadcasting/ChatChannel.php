@@ -4,6 +4,7 @@ namespace App\Broadcasting;
 
 use App\Models\User;
 use App\Models\ChatRoom;
+use Illuminate\Support\Facades\Log;
 
 class ChatChannel
 {
@@ -18,6 +19,9 @@ class ChatChannel
      */
     public function join(User $user, $channel)
     {
+
+        Log::info("From chaneel: " . $channel);
+
         $room_ids = ChatRoom::find($channel);
         $room_id = json_decode($room_ids->participants);
         if (in_array($user->id, $room_id)) {
