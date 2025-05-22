@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ChatBody extends Component
 {
     public $channel_id;
-    public $messages = [];
+    public $messages;
     public $latest_message;
     public $own_id;
     public $sender_id;
@@ -22,7 +22,7 @@ class ChatBody extends Component
     {
         $this->own_id = Auth::id();
         $this->channel_id = $channel_id;
-        $this->messages = Messeges::where('chatRoom_id', $channel_id)->get()->toArray();
+        $this->messages = Messeges::where('chatRoom_id', $channel_id)->get();
         $this->last_id = Messeges::where('chatRoom_id', $channel_id)->orderBy('id', 'desc')->value('id');
     }
 
@@ -46,6 +46,8 @@ class ChatBody extends Component
 
         broadcast(new UpdateChat($this->channel_id, 'message', $body, Auth::id()))->toOthers();
     }
+
+
 
     public function render()
     {

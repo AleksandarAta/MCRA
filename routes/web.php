@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\App;
 use App\Http\Middleware\NeedUserInfo;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Middleware\InsertedUserInfo;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ConferenceController;
 
 route::get('/', function () {
     return view('hi');
@@ -32,6 +33,8 @@ Route::middleware([
         Route::resource('user', UserController::class);
         Route::resource('events', EventController::class);
         Route::resource('users', UserController::class)->only('index');
+        Route::get('confrence/room', [ConferenceController::class, 'room'])->name('conference.room');
+        Route::get('confrence/test', [ConferenceController::class, 'test'])->name('conference.test');
     });
     Route::middleware(InsertedUserInfo::class)->group(function () {
         Route::get('additional/information', [UserController::class, 'info'])->name('user.info');

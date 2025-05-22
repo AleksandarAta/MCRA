@@ -47,7 +47,7 @@ class Chat extends Component
     public function sendMessage()
     {
         $this->dispatch('sendMessage', $this->body)->to(ChatBody::class);
-
+        $this->dispatch('sendLocal', $this->body)->to(ChatBody::class);
         $this->body = '';
     }
     public function render()
