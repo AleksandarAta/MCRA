@@ -16,12 +16,19 @@ class startConferenceCall implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $user_id;
+    public $type;
+    public $offer;
+    public $sender_id;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($user_id)
+    public function __construct($user_id, $type, $offer, $sender_id)
     {
         $this->user_id = $user_id;
+        $this->type = $type;
+        $this->offer = $offer;
+        $this->sender_id = $sender_id;
     }
 
     /**
@@ -31,7 +38,6 @@ class startConferenceCall implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        Log::info('conference event fired');
         return [
             new PrivateChannel('App.Models.User.' . $this->user_id),
         ];
