@@ -21,23 +21,30 @@ class ConferenceCall extends Component
         $this->users = $users;
     }
 
-    #[On('echo-private:App.Models.User.{userId},startConferenceCall')]
-    public function startCall($event)
+    #[On('echo-private:App.Models.User.{userId},handleAwnser')]
+    public function handleAwnser($event)
     {
         $this->dispatch('startCall', $event);
     }
 
 
-    #[On('startConference')]
-    public function startConference($type, $sdp)
+    #[On('sendOffer')]
+    public function startConference($type, $sdp, $peerId)
     {
+
         $selectedUsers = User::whereIn('id', $this->selectedUsers)->get();
 
         foreach ($selectedUsers as $user) {
-            broadcast(new startConferenceCall($user->id, $type, $sdp, $this->userId))->toOthers();
+            broadcast(new startConferenceCall($user->id, $type, $sdp, $this->userId, $peerId))->toOthers();
         }
     }
 
+    #[On('sendIceCanidadtestoAnwserer')]
+    public function sendIceCandidates($peerId, $candidate)
+    {
+        dump("sending receiveIceCandidatesAwnserer");
+        $this->dispatch("receiveIceCandidatesAwnserer", $peerId, $candidate);
+    }
 
 
     public function render()

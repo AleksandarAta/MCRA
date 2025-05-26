@@ -25,10 +25,18 @@ class ConferenceRoom extends Component
     }
 
     #[On('sendAwnser')]
-    public function sendAwnser($type, $sdp)
+    public function sendAwnser($type, $sdp, $peerId,)
     {
-        broadcast(new startConferenceCall($this->sendAwnserTo, $type, $sdp, Auth::id()))->toOthers();
+        broadcast(new startConferenceCall($this->sendAwnserTo, $type, $sdp, Auth::id(), $peerId))->toOthers();
     }
+
+    #[On('sendIceCanidadtesToOfferer')]
+    public function sendIceCandidates($peerId, $candidate)
+    {
+        dump("sending sendIceCanidadtesToOfferer");
+        $this->dispatch("receiveIceCandidatesOfferer", $peerId, $candidate);
+    }
+
 
     public function render()
     {

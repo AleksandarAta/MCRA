@@ -21,6 +21,7 @@
         "vite-plugin-static-copy": "^2.3.1"
     },
     "dependencies": {
+        "uuid": "^11.1.0",
         "webrtc-adapter": "^9.0.3"
     }
 }
