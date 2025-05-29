@@ -47,6 +47,11 @@ class ChatBody extends Component
         broadcast(new UpdateChat($this->channel_id, 'message', $body, Auth::id()))->toOthers();
     }
 
+    #[On('sendLocal')]
+    public function sentLocal($body, $room_id)
+    {
+        $this->dispatch('sentLocal', $body, $room_id);
+    }
 
 
     public function render()

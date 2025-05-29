@@ -11,6 +11,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Middleware\InsertedUserInfo;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ConferenceController;
+use App\Http\Middleware\LangugaeMiddleware;
 
 route::get('/', function () {
     return view('hi');
@@ -24,6 +25,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    LangugaeMiddleware::class,
 ])->group(function () {
     Route::middleware(NeedUserInfo::class)->group(function () {
         Route::get('/dashboard', function () {
@@ -40,7 +42,5 @@ Route::middleware([
         Route::get('additional/information', [UserController::class, 'info'])->name('user.info');
         Route::post('add/additional/info', [UserController::class, "addInfo"])->name('add.information');
     });
-    // Route::
 });
-
 Route::get('change', [LanguageController::class, 'change'])->name('lang.change');

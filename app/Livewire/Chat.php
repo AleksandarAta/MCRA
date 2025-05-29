@@ -15,7 +15,7 @@ class Chat extends Component
     public $open;
     public $lastMessage;
     public $friend;
-    public $body;
+    public $body = [];
     #[On('startChat')]
     public function startChat($friend_id, $name)
     {
@@ -41,15 +41,28 @@ class Chat extends Component
                 'friend_id' => $friend_id,
                 'room_id' => $room_ids,
             ]);
+        } else {
+            return;
         }
     }
     #[On('sendMessage')]
-    public function sendMessage()
+    public function sendMessage($room_id)
     {
-        $this->dispatch('sendMessage', $this->body)->to(ChatBody::class);
-        $this->dispatch('sendLocal', $this->body)->to(ChatBody::class);
-        $this->body = '';
+        $message = $this->body[$room_id];
+        $this->dispatch('sendMessage', $message)->to(ChatBody::class);
+        $this->dispatch('sendLocal', $message, $room_id)->to(ChatBody::class);
+        $this->body = [];
     }
+
+
+    public function closeChat($op)
+    {
+        $this->open = collect($this->open);
+        $this->open = $this->open->reject(function ($open) use ($op) {
+            return $open['room_id'] == $op;
+        });
+    }
+
     public function render()
     {
         // if ($this->open != null) {

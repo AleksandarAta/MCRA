@@ -44,10 +44,6 @@ class AcceptedFriendRequest extends Notification
     {
 
 
-        Log::info(new BroadcastMessage([
-            'massage' => 'message'
-        ]));
-
         return new BroadcastMessage([
             'event' => $this->event,
             'user' => $this->user,

@@ -1,21 +1,26 @@
 <div class="fixed bottom-0 right-[280px] flex">
     @if ($open != null)
         @foreach ($open as $op)
-            <div class="mr-3">
-                <div class="p-2 bg-orange-400 text-white ">
-                    <div class="flex justify-between  w-20">
+            <div class="mr-3" wire:key="chat-window-{{ $op['room_id'] }}">
+                <div class="p-2 bg-orange-400 text-white flex justify-between ">
+                    <div class="flex justify-between whitespace-nowrap  w-20">
                         <img src="{{ asset($friend->profile_photo_path) }}" alt="" class= "w-7 h-6 rounded">
                         <span class="text-white">{{ $op['name'] }}</span>
+                    </div>
+                    <div>
+                        <button wire:click = "closeChat({{ $op['room_id'] }})">X</button>
                     </div>
                 </div>
                 <div class="body">
                     <livewire:chatBody :channel_id="$op['room_id']" :key="$op['room_id']" />
                 </div>
                 <div class="footer w-full bg-gray-300 p-2">
-                    <form action="" wire:submit.prevent="sendMessage()" class="flex justify-between items-center">
-                        <input type="text" name="body" id="body"
-                            class="w-11/12 rounded foucs:ring-0 focus:outline-none" wire:model="body">
-                        <button type="submit">
+                    <form action="" wire:submit.prevent="sendMessage({{ $op['room_id'] }})"
+                        class="flex justify-between items-center">
+                        <input type="text" name="body{{ $op['room_id'] }}" id="body{{ $op['room_id'] }}"
+                            class="w-11/12 rounded foucs:ring-0 focus:outline-none"
+                            wire:model="body.{{ $op['room_id'] }}">
+                        <button type="submit" id="chat{{ $op['room_id'] }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                 class="w-5 h-6 fill-orange-400 self-center">
                                 <path

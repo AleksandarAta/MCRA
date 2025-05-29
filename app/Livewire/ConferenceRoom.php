@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Events\handleAwnser;
 use App\Events\startConferenceCall;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class ConferenceRoom extends Component
@@ -27,16 +29,28 @@ class ConferenceRoom extends Component
     #[On('sendAwnser')]
     public function sendAwnser($type, $sdp, $peerId,)
     {
-        broadcast(new startConferenceCall($this->sendAwnserTo, $type, $sdp, Auth::id(), $peerId))->toOthers();
+        broadcast(new handleAwnser($this->sendAwnserTo, $type, $sdp, Auth::id(), $peerId))->toOthers();
     }
 
     #[On('sendIceCanidadtesToOfferer')]
     public function sendIceCandidates($peerId, $candidate)
     {
-        dump("sending sendIceCanidadtesToOfferer");
         $this->dispatch("receiveIceCandidatesOfferer", $peerId, $candidate);
     }
+    #[On('echo-private:App.Models.User.{userId},sendIceCandidates')]
+    public function handle($data)
+    {
 
+
+        $peerId = $data['data']['peerId'];
+        $candidate = $data['data']['candidate'];
+
+        Log::info('peerId : ' . $peerId);
+        Log::info($candidate);
+
+
+        $this->dispatch('receiveIceCandidatesAnwserer', $data);
+    }
 
     public function render()
     {

@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function change(Request $reuqest) {
+    public function change(Request $reuqest)
+    {
         $lang = $reuqest->lang;
 
-        Session::put('locale' , $lang);
-
-        dd(session());
+        if (in_array($lang, ['en', 'mk'])) {
+            Session::put('locale', $lang);
+        }
 
         return redirect()->back();
     }

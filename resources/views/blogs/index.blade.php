@@ -50,7 +50,7 @@
                                 <div class="prose dark:prose-invert max-w-none mb-4">
                                     <p>{!! Str::words($blog->body, 3, ' ...') !!}</p>
                                 </div>
-                                <a href="{{ route('blogs.show', $blog->slug) }}">
+                                <a href="{{ route('blogs.show', $blog->slug) }} ">
                                     <button
                                         class="rounded p-2 absolute bottom-2 right-2 bg-orange-400 hover:text-black hover:bg-white hover:border hover:border-orange-400 ml-3 dark:bg-orange-600 dark:text-white dark:hover:text-black dark:hover:bg-white dark:hover:border-orange-400">
                                         {{ __('Show More') }}</button>

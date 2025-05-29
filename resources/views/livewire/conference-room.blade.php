@@ -6,12 +6,12 @@
         let peers = new Map();
         let pendingCandidates = new Map();
         let handledAnswers = new Set();
-        let remoteVideos = new Map();
+        let remoteDescriptionSet = new Set();
+
         Livewire.on('startConferenece', async function(event) {
 
             const peerId = event[0].peerId;
             const offer = event[0].offer;
-
 
             if (handledAnswers.has(peerId)) {
                 console.log('Answer already handled for this peer, ignoring.');
@@ -45,24 +45,39 @@
                 });
 
                 peers.set(peerId, pc);
+                console.log("pc set: ",
+                    peers);
+                if (pendingCandidates.has(peerId)) {
+                    const candidates = pendingCandidates.get(peerId);
+                    console.log('Processing pending candidates:', candidates);
+                    candidates.forEach(candidate => {
+                        const iceCandidate = new RTCIceCandidate(candidate);
+                        pc.addIceCandidate(iceCandidate).catch(console.error);
+                        console.log('added ice candidate');
+                    });
+                    pendingCandidates.delete(peerId);
+                }
+
 
                 stream.getTracks().forEach(track => pc.addTrack(track, stream));
 
                 pc.ontrack = e => {
-                    console.log(e.streams[0]);
-                    remoteVideo = document.createElement('video');
-                    remoteVideo.style.width = '320px';
-                    remoteVideo.style.height = '240px';
-                    remoteVideo.style.backgroundColor = 'black';
-                    remoteVideo.id = `remote-${peerId}`;
-                    remoteVideo.autoplay = true;
-                    remoteVideo.playsInline = true;
-                    document.getElementById('room2').appendChild(remoteVideo);
-                    remoteVideos.set(peerId, remoteVideo);
-                    remoteVideo.srcObject = e.streams[0];
-                    console.log("Video tracks:", e.streams[0].getVideoTracks());
-                };
+                    const existingVideo = document.getElementById(`remote-${peerId}`);
 
+                    if (!existingVideo) {
+                        const remoteVideo = document.createElement('video');
+                        remoteVideo.id = `remote-${peerId}`;
+                        remoteVideo.style.width = '320px';
+                        remoteVideo.style.height = '240px';
+                        remoteVideo.style.backgroundColor = 'black';
+                        remoteVideo.autoplay = true;
+                        remoteVideo.playsInline = true;
+                        remoteVideo.srcObject = e.streams[0];
+                        document.getElementById('room2').appendChild(remoteVideo);
+                    } else {
+                        existingVideo.srcObject = e.streams[0];
+                    }
+                };
 
 
                 await pc.setRemoteDescription(new RTCSessionDescription({
@@ -97,17 +112,25 @@
             }
 
         });
-        Livewire.on('receiveIceCandidatesAwnserer', async function(event) {
-            const peerId = event.detail[0];
-            const eventCandiate = event.detail[1];
+        Livewire.on('receiveIceCandidatesAnwserer', (data) => {
+
+            const peerId = data['0']['data']['peerId'];
+            const dataCandidate = data['0']['data']['candidate'];
             const pc = peers.get(peerId);
-            try {
-                console.log('added Ice candidate');
-                const candidate = new RTCIceCandidate(eventCandiate);
-                await pc.addIceCandidate(candidate);
-            } catch (err) {
-                console.error('Error adding ICE candidate:', err);
+
+            if (!pc) {
+                if (!pendingCandidates.has(peerId)) {
+                    pendingCandidates.set(peerId, []);
+                }
+                pendingCandidates.get(peerId).push(dataCandidate);
+                console.log('Candidate stored (peer not ready)');
+                return;
             }
-        });
+
+            if (dataCandidate) {
+                const candidate = new RTCIceCandidate(dataCandidate);
+                pc.addIceCandidate(candidate).catch(console.error);
+            }
+        })
     </script>
 @endscript

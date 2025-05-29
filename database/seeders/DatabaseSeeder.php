@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call(RoleAndPremissonSeeder::class);
+        $this->call(RoleAndPremissonSeeder::class);
 
         // User::factory(10)->create();
 
@@ -32,12 +32,12 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('admin'),
         // ])->assignRole('admin');
 
-        // User::create([
-        //     'name' => 'editor',
-        //     'email' => 'editor@editor.com',
-        //     'phone' =>  '070619131',
-        //     'password' => Hash::make('editor'),
-        // ])->assignRole('editor');   
+        User::create([
+            'name' => 'conference',
+            'email' => 'conference@conference.com',
+            'phone' =>  '070619131',
+            'password' => Hash::make('conference'),
+        ])->assignRole('conference');
 
         // Blog::factory(100)->create();
 
@@ -48,8 +48,8 @@ class DatabaseSeeder extends Seeder
 
         // Messeges::factory(100)->create();
 
-        for ($i = 0; $i < 15; $i++) {
-            Event::factory()->has(Ticket::factory())->create();
-        }
+        // for ($i = 0; $i < 15; $i++) {
+        //     Event::factory()->has(Ticket::factory())->create();
+        // }
     }
 }

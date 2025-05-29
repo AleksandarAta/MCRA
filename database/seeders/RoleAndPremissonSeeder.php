@@ -12,13 +12,15 @@ class RoleAndPremissonSeeder extends Seeder
 
     public function run(): void
     {
-        $admin =   Role::create(['name' => 'admin']);
-        $editor =  Role::create(['name' => 'editor']);
-        Permission::create(['name' => 'editor']);
-       Permission::create(['name' => 'admin']);
-
+        // $admin = Role::create(['name' => 'admin']);
+        $admin = Role::findByName('admin');
+        // $editor =  Role::create(['name' => 'editor']);
+        // $conference = Role::create(['name' => 'conference']);
+        // Permission::create(['name' => 'editor']);
+        // Permission::create(['name' => 'admin']);
+        // Permission::create(['name' => 'conference']);
         $admin->givePermissionTo(Permission::all());
-        $editor->givePermissionTo('editor');
-
+        // $editor->givePermissionTo('editor');
+        // $conference->givePermissionTo('conference');
     }
 }

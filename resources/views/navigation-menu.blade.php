@@ -36,12 +36,15 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     </div>
+                @endrole
+                @can('conference')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('conference.room') }}" :active="request()->routeIs('conference.room')">
                             {{ __('Conference Room') }}
                         </x-nav-link>
                     </div>
-                @endrole
+                @endcan
+
 
                 <livewire:delete-modal />
             </div>
@@ -103,7 +106,6 @@
 
                 @if (Route::has('login'))
                     @auth
-                        <livewire:conference-room />
                         <livewire:users.search-users />
                         <div class="ml-4 p-2 text-sm text-gray-700 dark:text-gray-300">
                             <a href="{{ route('lang.change', ['lang' => 'mk']) }}" class="dark:text-white">MK</a>
